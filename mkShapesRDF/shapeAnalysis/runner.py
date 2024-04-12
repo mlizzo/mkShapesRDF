@@ -442,11 +442,8 @@ class RunAnalysis:
                     map(lambda k: str(k), df1.GetColumnNames())
                 )
                 
-                # Since it is not possible to define a DATA-dependent weight through aliases - DATA are not divided 
-                # by subsamples but rather by trigger selection - we must remove the alias weight each time, as its 
-                # value depends on the trigger selection.
-                if isData:
-                    del self.aliases["weight"]
+                # Clear alias weight
+                del self.aliases["weight"]
 
 
     def loadSystematics(self):
