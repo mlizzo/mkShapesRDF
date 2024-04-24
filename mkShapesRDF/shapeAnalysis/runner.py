@@ -323,7 +323,7 @@ class RunAnalysis:
 
         print("\n\nLoaded dataframes\n\n")
 
-    def loadAliases(self):
+    def loadAliases(self, afterNuis=False):
         """
         Load aliases in the dataframes.
         """
@@ -335,6 +335,22 @@ class RunAnalysis:
                 define_string = "df"
                 usedVariables = set(self.dfs[sampleName][index]["usedVariables"])
                 for alias in list(aliases.keys()):
+                    # only load aliases needed for nuisances!
+                    # if beforeNuis
+                    if (afterNuis) != (aliases[alias].get("afterNuis", False)):
+                        if "expr" in aliases[alias]:
+                            usedVariables = usedVariables.union(
+                                ParseCpp.listOfVariables(
+                                    ParseCpp.parse(aliases[alias]["expr"])
+                                )
+                            )
+                        elif  "args" in aliases[alias]:
+                            usedVariables = usedVariables.union(
+                                    ParseCpp.listOfVariables(
+                                        ParseCpp.parse(aliases[alias]["args"])
+                                        )
+                                    )
+                        continue
                     if "samples" in list(aliases[alias]):
                         if sampleName not in aliases[alias]["samples"]:
                             continue
@@ -415,17 +431,18 @@ class RunAnalysis:
                 print("\n\n", sampleName, "\n\n", aliases["weight"])
 
                 # load the alias weight
-                alias = "weight"
+                if not afterNuis:
+                    alias = "weight"
 
-                if alias in self.dfs[sampleName][index]["columnNames"]:
-                    print(
-                        f"Alias {alias} cannot be defined, column with that name already exists"
+                    if alias in self.dfs[sampleName][index]["columnNames"]:
+                        print(
+                            f"Alias {alias} cannot be defined, column with that name already exists"
+                        )
+                        sys.exit()
+
+                    define_string += (
+                        f".Define('{alias}', '{aliases[alias]['expr']}') \\\n\t"
                     )
-                    sys.exit()
-
-                define_string += (
-                    f".Define('{alias}', '{aliases[alias]['expr']}') \\\n\t"
-                )
                 df1 = eval(define_string)
                 if parentName:
                     df1 = df1.Filter(subsampleCut)
@@ -1218,6 +1235,7 @@ class RunAnalysis:
         self.loadAliases()
         # load systematics
         self.loadSystematics()
+        self.loadAliases(True)
 
         # apply preselections
         for sampleName in self.dfs.keys():
