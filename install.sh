@@ -80,7 +80,5 @@ EOF
 
 chmod +x start.sh
 
-wget https://gpizzati.web.cern.ch/mkShapesRDF/jsonpog-integration.tar.gz
-tar -xzvf jsonpog-integration.tar.gz
-rm -r jsonpog-integration.tar.gz
-mv jsonpog-integration mkShapesRDF/processor/data/
+mkdir mkShapesRDF/processor/data/jsonpog-integration
+cp -r /cvmfs/cms.cern.ch/rsync/cms-nanoAOD/jsonpog-integration/POG mkShapesRDF/processor/data/jsonpog-integration/
