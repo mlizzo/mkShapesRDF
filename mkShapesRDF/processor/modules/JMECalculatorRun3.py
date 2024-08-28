@@ -120,18 +120,7 @@ class JMECalculator(Module):
                 METSources = calcMET.available()[1:][::2]
                 METSources = [str(source).replace('up', '') for source in METSources]
                 print(METSources)
-                '''
-                jesSources = calcMET.available()
-                skip = 1
-                if self.do_JER and "Puppi" not in MET:
-                    skip += 6 * 2
-                # first are JERs, last two are unclustered unc.
-                jesSources = jesSources[skip:-2][::2]
-                jesSources = list(map(lambda k: str(k)[3:-2], jesSources))
-                # jesSources = sorted(jesSources)
-                jesSources = list(map(lambda k: "JES_" + k, jesSources))
-                print(jesSources)
-                '''
+                
                 # list of columns to be passed to myJetVarCal produce
                 cols = []
 
@@ -194,19 +183,6 @@ class JMECalculator(Module):
                     df = df.Define(f"{MET}_phi", f"CleanJet_pt.size() > 0 ? {MET}Vars.phi(0) : {RawMET}_phi")
                 
                 if self.store_variations:
-                    '''
-                    _sources = []
-                    if self.do_JER and "Puppi" not in MET:
-                        _sources = [f"JER_{i}" for i in range(6)]
-                    _sources += jesSources
-                    sources = _sources.copy()
-                    METsources = _sources.copy()
-                    if self.do_Unclustered:
-                        METsources += ["MET"]  # last one is the unclustered variation
-                    print("\n")
-                    print("MET uncertainties: ")
-                    print(METsources)
-                    '''
                     for variable in [MET + "_pt", MET + "_phi"]:
                         for i, source in enumerate(METSources):
                             up = f"{MET}Vars.{variable.split('_')[-1]}({2*i+1})"
@@ -229,14 +205,7 @@ class JMECalculator(Module):
             jesSources = calc.available()[1:][::2]
             jesSources = [str(source).replace('up', '') for source in jesSources]
             print(jesSources)
-            '''
-            skip = 1
-            if self.do_JER and "Puppi" in MET:
-                skip += 1 * 2
-            # first are JERs, last two are unclustered unc.
-            jesSources = jesSources[skip:-2]
-            jesSources = list(map(lambda k: str(k).replace("jes", "JES"), jesSources))
-            '''
+            
             # list of columns to be passed to myJetVarCal produce
             cols = []
 
@@ -295,16 +264,6 @@ class JMECalculator(Module):
                 )
 
             if self.store_variations:
-                '''
-                _sources = []
-                if self.do_JER:
-                    _sources = [f"JER_{i}" for i in range(6)]
-                _sources += jesSources
-                sources = _sources.copy()
-                print("\n")
-                print("JES uncertainties: ")
-                print(sources)
-                '''
                 for i, source in enumerate(jesSources):
                     variations_pt = []
                     variations_jetIdx = []
