@@ -323,7 +323,7 @@ Steps = {
         ]
     },
 
-    "MCl2loose2022EEv12__MCCorr2022EEv12__l2tight__TEST": {
+    "MCl2loose2022EEv12__MCCorr2022EEv12__l2tight": {
         "isChain": True,
         "do4MC": True,
         "do4Data": False,

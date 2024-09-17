@@ -12,7 +12,7 @@ class JMECalculator(Module):
         jsonFile,
         JEC_era,
         JER_era,
-		jsonFileSmearingTool,
+        jsonFileSmearingTool,
         jet_object,
         jes_unc,
         met_collections=["PuppiMET"],
