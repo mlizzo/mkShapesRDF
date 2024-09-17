@@ -730,7 +730,7 @@ Steps = {
         "do4MC": True,
         "do4Data": False,
         "import": "mkShapesRDF.processor.modules.JMECalculatorRun3",
-        "declare": 'jmeCalculator = lambda : JMECalculator("RPLME_FW/processor/data/jsonpog-integration/POG/JME/2022_Summer22EE/jet_jerc.json.gz", "Summer22EE_22Sep2023_V2_MC", "Summer22EE_22Sep2023_JRV1_MC", "RPLME_FW/processor/data/jsonpog-integration/POG/JME/jer_smear.json.gz", jet_object="AK4PFPuppi", \
+        "declare": 'jmeCalculator = lambda : JMECalculator("RPLME_FW/processor/data/jsonpog-integration/POG/JME/2022_Summer22EE/jet_jerc.json.gz", "Summer22EE_22Sep2023_V2_MC", "Summer22EE_22Sep2023_JRV1_MC", "RPLME_FW/processor/data/jsonpog-integration/POG/JME/jer_smear.json.gz", jet_object="AK4PFPuppi", jes_unc=["Total"], \
             do_Jets=True, do_MET=True, do_Unclustered=True, met_collections = ["PuppiMET", "MET", "RawMET"],do_JER=True, store_nominal=True, store_variations=True)',
         "module": "jmeCalculator()",
     },
